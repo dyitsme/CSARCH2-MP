@@ -47,6 +47,7 @@ export function add(A, M) {
       else {
         S = '0' + S
       }
+      C = 1
     }
     else if (A.charAt[i] == '0' && M.charAt[i] == '0') {
       if (C == 1) {
@@ -68,17 +69,13 @@ export function add(A, M) {
       }
     }
   }
+  return S
 }
 
 export function shift(A, Q, Q_1) {
-  // Q_1 = Q[len(Q)-1]
-  // Q = A[len(A)-1] + Q[:len(Q)-1]
-  // A = A[0] + A[:len(A)-1]
-  // return A,Q,Q_1
-  console.log(`Before A: ${A} before Q: ${Q} before Q_1: ${Q_1}`)
   Q_1 = Q.charAt(Q.length-1)
-  Q = A.charAt(A.length-1) + Q.slice(Q.length-1)
-  A = A.charAt(0) + A.slice(A.length-1)
+  Q = A.charAt(A.length-1) + Q.slice(0, Q.length-1)
+  A = A.charAt(0) + A.slice(0, A.length-1)
   return {
     A: A,
     Q: Q,

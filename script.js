@@ -31,7 +31,7 @@ function main() {
       console.log(A + "\t\tCycle " + (i+1))
     }
     else if  (Q.charAt(Q0) + Q_1 == "10") {
-      A = add(A,MC)
+      A = add(A, MC) // add is wrong
       console.log(MC + "\t\tA <- A-M")
       console.log(A + "\t\tCycle " + (i+1))
     }
@@ -44,7 +44,6 @@ function main() {
     A = obj.A
     Q = obj.Q
     Q_1 = obj.Q_1
-    console.log(`A: ${A} Q: ${Q} Q_1: ${Q_1}`)
     console.log(A + " " + Q + " " + Q_1)
   }
 
