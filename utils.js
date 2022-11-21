@@ -40,7 +40,7 @@ export function add(A, M) {
   let C = 0
 
   for (let i = bits-1; i > -1; i--) {
-    if (A.charAt[i] == '1' && M.charAt[i] == '1') {
+    if (A.charAt(i) == '1' && M.charAt(i) == '1') {
       if (C == 1) {
         S = '1' + S
       }
@@ -49,7 +49,7 @@ export function add(A, M) {
       }
       C = 1
     }
-    else if (A.charAt[i] == '0' && M.charAt[i] == '0') {
+    else if (A.charAt(i) == '0' && M.charAt(i) == '0') {
       if (C == 1) {
         S = '1' + S
       }
