@@ -1,18 +1,72 @@
 const binRadio = document.querySelector('#binary')
-const decRadio = document.querySelector('#decimal')
 
-export function isDec() {
+export function chosenDec() {
   if (binRadio.checked) {
-    return 0
+    console.log('its binary')
+    return false
   }
   else {
-    return 1
+    console.log('its decimal')
+    return true
   }
 }
 
-export function dectoBin(dec) {
-	// unsure of this function, use with caution
-  return dec.toString(2)
+function isDigit(D) {
+  const validNums = ['1', '2,', '3', '4', '5', '6', '7', '8', '9', '0']
+
+  for (let i = 0; i < D.length; i++) {
+    for (let j = 0; j < validNums.length; j++) {
+      if (D.charAt(i) != validNums[j]) { // might consider === if value is not a string
+        return false
+      }
+    }
+  }
+  return true
+}
+
+export function isBin(B) {
+  const validNums = ['0', '1']
+
+  for (let i = 0; i < B.length; i++) {
+    for (let j = 0; j < validNums.length; j++) {
+      if (B.charAt(i) != validNums[j]) { // might consider === if value is not a string
+        return false
+      }
+    }
+  }
+  return true
+}
+
+
+export function dec_to_bin(D, valid) {
+  let nB = '0'
+  let B = ''
+
+  if (D.charAt(0) == "-") {
+    D = D.slice(1)
+    nB = '1' 
+  }
+  if (isDigit(D)) {
+    D = parseInt(D)
+    B = ''
+    while (D != 0) {
+      B = str(D % 2) + B
+      D = D / 2
+      D = Math.floor(D)
+    }
+    if (nB == '1') {
+      B = complement(B)
+    }
+    B = nB + B
+  }
+  else {
+    B = 0
+    valid = false
+  }
+  return {
+    B: B,
+    valid: valid
+  }
 }
 
 export function complement(M) {
@@ -82,3 +136,4 @@ export function shift(A, Q, Q_1) {
     Q_1: Q_1 
   }
 }
+

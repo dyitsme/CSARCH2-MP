@@ -1,4 +1,4 @@
-import { isDec, complement, add, shift } from './utils.js'
+import { complement, add, shift, chosenDec, isBin, dec_to_bin } from './utils.js'
 
 document.querySelector('#submit').addEventListener('click', main)
 
@@ -11,11 +11,42 @@ function main() {
   let Q_1 = '0'
   let A = ''
   let prod = '' 
+  let valid = true
+  let masterValid = true
+  // ========= checking for validity and conversion ================
+  // if (chosenDec) {
+  //   let dec_to_bin_obj = dec_to_bin(M, valid)
+  //   M = dec_to_bin_obj.B
+  //   valid = dec_to_bin_obj.valid
 
+  //   if (!valid) {
+  //     masterValid = false
+  //   }
+
+  //   dec_to_bin_obj = dec_to_bin(Q, valid)
+  //   Q = dec_to_bin_obj.B
+  //   valid = dec_to_bin_obj.valid
+  //   // should have a master invalid
+  //   if (!valid) {
+  //     masterValid = false
+  //   }
+  // }
+  // else {
+  //   valid = isBin(M)
+  //   if (!valid) {
+  //     masterValid = false
+  //   }
+  //   valid = isBin(Q)
+  //   if (!valid) {
+  //     masterValid = false
+  //   }
+  // }
+
+  // ========= initialization ======================================
   for (let i = 0; i < M.length; i++) {
     A = '0' + A
   }
-
+  
   console.log("\nInitialization: ")
   console.log("-M = " + MC)
   console.log("M = " + M)

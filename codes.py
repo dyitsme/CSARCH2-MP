@@ -1,3 +1,42 @@
+def dec_to_bin(D, valid):
+    nB = "0"
+    if D[0] == "-":
+        D = D[1:]
+        nB = "1"
+    if D.isdigit():
+        D = int(D)
+        B = ""
+        while D != 0:
+            B = str(D % 2) + B
+            D //= 2
+        if nB == "1":
+            B = complement(B)
+        B = nB + B
+    else:
+        B = 0
+        valid = False
+    return B, valid
+
+def bin_to_dec(B):
+    D = 0
+    multiplier = 1
+    negative = False
+
+    if B[0] == "1":
+        B = complement(B)
+        B = B[1:]
+        negative = True
+
+    for i in range(len(B)-1,-1,-1):
+        D += int(B[i]) * multiplier
+        multiplier *= 2
+    
+    if negative:
+        D *= -1
+
+    return D
+    pass
+
 def complement(M):
     bits = len(M)
     flag = False
@@ -41,37 +80,81 @@ def shift(A,Q,Q_1):
     A = A[0] + A[:len(A)-1]
     return A,Q,Q_1
 
-M = input()
-MC = complement(M)
-Q = input()
-Q0 = len(Q)-1
-Q_1 = '0'
-A = ''
-for i in M:
-    A = '0' + A
+valid = True
+print("Enter 'B' for binary input or 'D' for decimal input:")
+base = input()
 
-print("\nInitialization: ")
-print("-M = " + MC)
-print("M = " + M)
-print("A = " + A + "  Q = " + Q + "  Q-1 = " + Q_1 + "\n")
+if base != 'B' and base != 'D':
+    valid = False
+else:
+    if base == 'B':
+        print("Multiplicand (binary):")
+        M = input()
+        print("Multiplicand (binary):")
+        Q = input()
 
-print("" + A + " " + Q + " " + Q_1)
-for i in range(len(Q)):
-    print("------------------------------")
-    if Q[Q0] + Q_1 == "01":
-        A = add(A,M)
-        print(M + "\t\tA <- A+M")
-        print(A + "\t\tCycle " + str(i+1))
-    elif Q[Q0] + Q_1 == "10":
-        A = add(A,MC)
-        print(MC + "\t\tA <- A-M")
-        print(A + "\t\tCycle " + str(i+1))
+        for i in M:
+            if i != "0" and i != "1":
+                valid = False
+        for i in Q:
+            if i != "0" and i != "1":
+                valid = False
     else:
-        print("-COPY-\t\tCycle " + str(i+1))
+        print("Multiplicand (decimal):")
+        dM = input()
+        print("Multiplicand (decimal):")
+        dQ = input()
+        
+        M, valid = dec_to_bin(dM, valid)
+        Q, valid = dec_to_bin(dQ, valid)
 
-    print(A + " " + Q + " " + Q_1)
-    A,Q,Q_1 = shift(A,Q,Q_1)
-    print(A + " " + Q + " " + Q_1)
+display = True
+if valid:
+    print("Enter 'Y' if you want to display each step or 'N' if not:")
+    choice = input()
+    if choice != "Y" and choice != "N":
+        valid = False
+    elif choice == "Y":
+        display = True
+    else:
+        display = False
 
-prod = A + Q
-print("\nFinal Answer: " + prod)
+if valid:
+    MC = complement(M)
+    Q0 = len(Q)-1
+    Q_1 = '0'
+    A = ''
+    for i in M:
+        A = '0' + A
+
+    if display:
+        print("\nInitialization: ")
+        print("-M = " + MC)
+        print("M = " + M)
+        print("A = " + A + "  Q = " + Q + "  Q-1 = " + Q_1 + "\n")
+        print("" + A + " " + Q + " " + Q_1)
+    for i in range(len(Q)):
+        if display: print("------------------------------")
+        if Q[Q0] + Q_1 == "01":
+            if display:
+                print(M + "\t\tA <- A+M")
+                print(A + "\t\tCycle " + str(i+1))
+            A = add(A,M)
+        elif Q[Q0] + Q_1 == "10":
+            if display:
+                print(MC + "\t\tA <- A-M")
+                print(A + "\t\tCycle " + str(i+1))
+            A = add(A,MC)
+        else:
+            if display: print("-COPY-\t\tCycle " + str(i+1))
+
+        if display: print(A + " " + Q + " " + Q_1)
+        A,Q,Q_1 = shift(A,Q,Q_1)
+        if display: print(A + " " + Q + " " + Q_1)
+
+    prod = A + Q
+    print("\nFinal Answer")
+    print("Binary: " + prod)
+    print("Decimal: " + str(bin_to_dec(prod)))
+else:
+    print("You have entered an invalid value!")
