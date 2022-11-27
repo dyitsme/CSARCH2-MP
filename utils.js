@@ -1,16 +1,5 @@
 const binRadio = document.querySelector('#binary')
 
-export function chosenDec() {
-  if (binRadio.checked) {
-    console.log('its binary')
-    return false
-  }
-  else {
-    console.log('its decimal')
-    return true
-  }
-}
-
 function isDigit(D) {
   const validNums = ['1', '2,', '3', '4', '5', '6', '7', '8', '9', '0']
 
@@ -37,6 +26,25 @@ export function isBin(B) {
   return true
 }
 
+// does not work yet
+// def dec_to_bin(D, valid):
+//     nB = "0"
+//     if D[0] == "-":
+//         D = D[1:]
+//         nB = "1"
+//     if D.isdigit():
+//         D = int(D)
+//         B = ""
+//         while D != 0:
+//             B = str(D % 2) + B
+//             D //= 2
+//         if nB == "1":
+//             B = complement(B)
+//         B = nB + B
+//     else:
+//         B = 0
+//         valid = False
+//     return B, valid
 
 export function dec_to_bin(D, valid) {
   let nB = '0'
@@ -46,11 +54,11 @@ export function dec_to_bin(D, valid) {
     D = D.slice(1)
     nB = '1' 
   }
-  if (isDigit(D)) {
+  // if (isDigit(D)) {
     D = parseInt(D)
     B = ''
     while (D != 0) {
-      B = str(D % 2) + B
+      B = (D % 2).toString() + B
       D = D / 2
       D = Math.floor(D)
     }
@@ -58,15 +66,17 @@ export function dec_to_bin(D, valid) {
       B = complement(B)
     }
     B = nB + B
-  }
-  else {
-    B = 0
-    valid = false
-  }
-  return {
-    B: B,
-    valid: valid
-  }
+  // }
+  // else {
+  //   alert('Is not digit')
+  //   B = 0
+  //   valid = false
+  // }
+  // return {
+  //   B: B,
+  //   valid: valid
+  // }
+  return B
 }
 
 export function complement(M) {

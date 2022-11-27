@@ -1,7 +1,23 @@
-import { complement, add, shift, chosenDec, isBin, dec_to_bin } from './utils.js'
+import { complement, add, shift, isBin, dec_to_bin } from './utils.js'
 
 document.querySelector('#submit').addEventListener('click', main)
 
+
+function checked_num_radio() {
+  let radioButtonGroup = document.getElementsByName("num_type")
+  let checkedRadio = Array.from(radioButtonGroup).find(
+    (radio) => radio.checked
+  )
+  return checkedRadio.value
+}
+
+function checked_out_radio() {
+  let radioButtonGroup = document.getElementsByName("out_type")
+  let checkedRadio = Array.from(radioButtonGroup).find(
+    (radio) => radio.checked
+  )
+  return checkedRadio.value
+}
 
 function main() {
   let M = document.querySelector('#inputM').value
@@ -13,35 +29,16 @@ function main() {
   let prod = '' 
   let valid = true
   let masterValid = true
+  
+  let num_type = checked_num_radio()  // 'Binary' or 'Decimal'
+  let out_type = checked_out_radio()  // 'Step', 'All', or 'File'
+
   // ========= checking for validity and conversion ================
-  // if (chosenDec) {
-  //   let dec_to_bin_obj = dec_to_bin(M, valid)
-  //   M = dec_to_bin_obj.B
-  //   valid = dec_to_bin_obj.valid
-
-  //   if (!valid) {
-  //     masterValid = false
-  //   }
-
-  //   dec_to_bin_obj = dec_to_bin(Q, valid)
-  //   Q = dec_to_bin_obj.B
-  //   valid = dec_to_bin_obj.valid
-  //   // should have a master invalid
-  //   if (!valid) {
-  //     masterValid = false
-  //   }
-  // }
-  // else {
-  //   valid = isBin(M)
-  //   if (!valid) {
-  //     masterValid = false
-  //   }
-  //   valid = isBin(Q)
-  //   if (!valid) {
-  //     masterValid = false
-  //   }
-  // }
-
+  if (num_type == 'Decimal') {
+    M = dec_to_bin(M, valid)
+    Q = dec_to_bin(Q, valid)
+    MC = complement(M)
+  }
   // ========= initialization ======================================
   for (let i = 0; i < M.length; i++) {
     A = '0' + A
@@ -77,7 +74,6 @@ function main() {
     Q_1 = obj.Q_1
     console.log(A + " " + Q + " " + Q_1)
   }
-
 
   prod = A + Q
   console.log("\nFinal Answer: " + prod)
