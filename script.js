@@ -1,4 +1,4 @@
-import { complement, add, shift, isBin, dec_to_bin } from './utils.js'
+import { complement, add, shift, is_bin, dec_to_bin } from './utils.js'
 
 document.querySelector('#submit').addEventListener('click', main)
 
@@ -62,11 +62,11 @@ function console_test(MC, M, Q, A, Q_1, Q0) {
   
 function render_all(MC, M, Q, A, Q_1, Q0) {
   let prod = ''
-  const output_box = document.querySelector('.output-box')
   
+  const output_box = document.querySelector('.output-box')
   output_box.innerHTML += `
     <div>
-      <div>Initialization</div>
+      <div class="init">Initialization</div>
       <div>-M = ${MC}</div>
       <div>M = ${M}</div>
       <div>A = ${A} Q = ${Q} Q-1 = ${Q_1}</div>
@@ -77,18 +77,17 @@ function render_all(MC, M, Q, A, Q_1, Q0) {
         <div>------------------------------</div>
       `
     if (Q.charAt(Q0) + Q_1 == "01") {
-      A = add(A, M)
-
       output_box.innerHTML += `
-        <div>
+        <div class="cycle">
           <div>${M} A <- A+M</div>
           <div>${A} Cycle ${i+1}</div>
         </div>
       `
+      A = add(A, M)
     }
     else if  (Q.charAt(Q0) + Q_1 == "10") {
       output_box.innerHTML += `
-        <div>
+        <div class="cycle">
           <div>${MC} A <- A-M</div>
           <div>${A} Cycle ${i+1}</div>
         </div>
@@ -97,7 +96,7 @@ function render_all(MC, M, Q, A, Q_1, Q0) {
     }
     else {
       output_box.innerHTML += `
-        <div>-COPY- Cycle ${i+1}</div>
+        <div class="cycle">-COPY- Cycle ${i+1}</div>
       `
     }
     
@@ -116,8 +115,50 @@ function render_all(MC, M, Q, A, Q_1, Q0) {
 
   prod = A + Q
   output_box.innerHTML += `
-    <div>Final Answer: ${prod}</div>
+    <div class="prod">Final Answer: ${prod}</div>
   `
+}
+
+function render_file(MC, M, Q, A, Q_1, Q0) {
+  let prod = ''
+  
+  const output_file = []
+
+  output_file.push(`Initialization\n`)
+  output_file.push(`-M = ${MC}\n`)
+  output_file.push(`M = ${M}\n`)
+  output_file.push(`A = ${A}\n`)
+  output_file.push(`A = ${A} Q = ${Q} Q-1 = ${Q_1}\n`)
+  for (let i = 0; i < Q.length; i++) {
+    output_file.push(`------------------------------\n`)
+
+    if (Q.charAt(Q0) + Q_1 == "01") {
+      A = add(A, M)
+      output_file.push(`${M} A <- A+M\n`)
+      output_file.push(`${A} Cycle ${i+1}\n`)
+    }
+    else if  (Q.charAt(Q0) + Q_1 == "10") {
+      A = add(A, MC) // add is wrong
+      output_file.push(`${M} A <- A+M\n`)
+      output_file.push(`${A} Cycle ${i+1}\n`)
+    }
+    else {
+      output_file.push(`-COPY- Cycle ${i+1}\n`)
+    }
+    
+    output_file.push(`${A} ${Q} ${Q_1}\n`)
+    let obj = shift(A, Q, Q_1)
+    A = obj.A
+    Q = obj.Q
+    Q_1 = obj.Q_1
+
+    output_file.push(`${A} ${Q} ${Q_1}\n`)
+  }
+
+  prod = A + Q
+  output_file.push(`Final Answer: ${prod}\n`)
+  
+  return output_file
 }
 
 function reset_html() {
@@ -129,6 +170,7 @@ function reset_html() {
 }
 
 function main() {
+  const output_box = document.querySelector('.output-box')
   let M = document.querySelector('#inputM').value
   let Q = document.querySelector('#inputQ').value
   let MC = complement(M)
@@ -136,7 +178,6 @@ function main() {
   let Q_1 = '0'
   let A = ''
   let valid = true
-  let masterValid = true
   
   let num_type = checked_num_radio()  // 'Binary' or 'Decimal'
   let out_type = checked_out_radio()  // 'Step', 'All', or 'File'
@@ -147,24 +188,37 @@ function main() {
     Q = dec_to_bin(Q, valid)
     MC = complement(M)
   }
+
   // ========= initialization ======================================
   for (let i = 0; i < M.length; i++) {
     A = '0' + A
   }
 
-  if (out_type == 'Step') {
-    // change to step by step
-    reset_html()
-    render_all(MC, M, Q, A, Q_1, Q0)
-  }
-  else if (out_type == 'All') {
-    reset_html()
-    render_all(MC, M, Q, A, Q_1, Q0)
+  if (is_bin(M) && is_bin(Q)) {
+    if (out_type == 'Step') {
+      // change to step by step
+      reset_html()
+      render_all(MC, M, Q, A, Q_1, Q0)
+    }
+    else if (out_type == 'All') {
+      reset_html()
+      render_all(MC, M, Q, A, Q_1, Q0)
+    }
+    else {
+      // display to text file
+      output_box.innerHTML += `
+        <a id="a1" download="output.txt">Download text file</a>
+      `
+      const file = render_file(MC, M, Q, A, Q_1, Q0)
+      const blob1 = new Blob(file, { type: 'text/plain'})
+      a1.href = URL.createObjectURL(blob1)
+    }
   }
   else {
-    // display to text file
+    output_box.innerHTML = `
+      <div class="error">Input should be in binary</div>
+    `
   }
-
-  console_test(MC, M, Q, A, Q_1, Q0)
+  // console_test(MC, M, Q, A, Q_1, Q0)
   
 }
