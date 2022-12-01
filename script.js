@@ -1,6 +1,7 @@
-import { complement, add, shift, is_bin, dec_to_bin } from './utils.js'
+import { complement, add, shift, is_bin, is_digit, dec_to_bin, rangebit4to16 } from './utils.js'
 
 document.querySelector('#submit').addEventListener('click', main)
+const output_box = document.querySelector('.output-box')
 
 
 function checked_num_radio() {
@@ -127,7 +128,6 @@ function render_file(MC, M, Q, A, Q_1, Q0) {
   output_file.push(`Initialization\n`)
   output_file.push(`-M = ${MC}\n`)
   output_file.push(`M = ${M}\n`)
-  output_file.push(`A = ${A}\n`)
   output_file.push(`A = ${A} Q = ${Q} Q-1 = ${Q_1}\n`)
   for (let i = 0; i < Q.length; i++) {
     output_file.push(`------------------------------\n`)
@@ -162,15 +162,41 @@ function render_file(MC, M, Q, A, Q_1, Q0) {
 }
 
 function reset_html() {
-  const output_box = document.querySelector('.output-box')
-
   while(output_box.firstChild) {
     output_box.removeChild(output_box.lastChild)
   }
 }
 
+function display(MC, M, Q, A, Q_1, Q0, out_type) {
+  if (out_type == 'Step') {
+    // change to step by step
+    reset_html()
+    render_all(MC, M, Q, A, Q_1, Q0)
+  }
+  else if (out_type == 'All') {
+    reset_html()
+    render_all(MC, M, Q, A, Q_1, Q0)
+  }
+  else {
+    // display to text file
+    output_box.innerHTML += `
+      <a id="a1" download="output.txt">Download text file</a>
+    `
+    const file = render_file(MC, M, Q, A, Q_1, Q0)
+    const blob1 = new Blob(file, { type: 'text/plain'})
+    a1.href = URL.createObjectURL(blob1)
+  }
+  
+}
+
+function initializeA(A, M) {
+  for (let i = 0; i < M.length; i++) {
+    A = '0' + A
+  }
+  return A
+}
+
 function main() {
-  const output_box = document.querySelector('.output-box')
   let M = document.querySelector('#inputM').value
   let Q = document.querySelector('#inputQ').value
   let MC = complement(M)
@@ -182,43 +208,50 @@ function main() {
   let num_type = checked_num_radio()  // 'Binary' or 'Decimal'
   let out_type = checked_out_radio()  // 'Step', 'All', or 'File'
 
-  // ========= checking for validity and conversion ================
-  if (num_type == 'Decimal') {
-    M = dec_to_bin(M, valid)
-    Q = dec_to_bin(Q, valid)
-    MC = complement(M)
-  }
-
   // ========= initialization ======================================
-  for (let i = 0; i < M.length; i++) {
-    A = '0' + A
-  }
 
-  if (is_bin(M) && is_bin(Q)) {
-    if (out_type == 'Step') {
-      // change to step by step
-      reset_html()
-      render_all(MC, M, Q, A, Q_1, Q0)
-    }
-    else if (out_type == 'All') {
-      reset_html()
-      render_all(MC, M, Q, A, Q_1, Q0)
+
+  if (num_type == 'Binary') {
+    if (is_bin(M) && is_bin(Q)) {
+      if (rangebit4to16(M) && rangebit4to16(Q)) {
+        A = initializeA(A, M)
+        display(MC, M, Q, A, Q_1, Q0, out_type)
+      }
+      else {
+        output_box.innerHTML = `
+          <div class="error">Input should be within 4 to 16 bits</div>
+        `
+      }
     }
     else {
-      // display to text file
-      output_box.innerHTML += `
-        <a id="a1" download="output.txt">Download text file</a>
+      output_box.innerHTML = `
+        <div class="error">Input should be in binary</div>
       `
-      const file = render_file(MC, M, Q, A, Q_1, Q0)
-      const blob1 = new Blob(file, { type: 'text/plain'})
-      a1.href = URL.createObjectURL(blob1)
     }
   }
   else {
-    output_box.innerHTML = `
-      <div class="error">Input should be in binary</div>
-    `
+    if (is_digit(M) && is_digit(Q)) {
+      M = dec_to_bin(M, valid)
+      Q = dec_to_bin(Q, valid)
+      MC = complement(M)
+
+      if (rangebit4to16(M) && rangebit4to16(Q)) {
+        A = initializeA(A, M)
+        display(MC, M, Q, A, Q_1, Q0, out_type)
+      }
+      else {
+        output_box.innerHTML = `
+          <div class="error">Input should be within 4 to 16 bits</div>
+        `
+      }
+    }
+    else {
+      output_box.innerHTML = `
+        <div class="error">Input should be in decimal</div>
+      `
+    }
   }
+
   // console_test(MC, M, Q, A, Q_1, Q0)
   
 }

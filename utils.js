@@ -155,3 +155,11 @@ export function shift(A, Q, Q_1) {
   }
 }
 
+// checks if within 4 to 16 bits
+export function rangebit4to16(str) {
+  
+  if (str.length >= 4 && str.length <= 16) {
+    return true 
+  }
+  return false
+}
