@@ -179,7 +179,7 @@ function display(MC, M, Q, A, Q_1, Q0, out_type) {
   }
   else {
     // display to text file
-    output_box.innerHTML += `
+    output_box.innerHTML = `
       <a id="a1" download="output.txt">Download text file</a>
     `
     const file = render_file(MC, M, Q, A, Q_1, Q0)
@@ -231,19 +231,20 @@ function main() {
   }
   else {
     if (is_digit(M) && is_digit(Q)) {
-      M = dec_to_bin(M, valid)
-      Q = dec_to_bin(Q, valid)
+      M = dec_to_bin(M)
+      Q = dec_to_bin(Q)
       MC = complement(M)
+      Q0 = Q.length-1
 
-      if (rangebit4to16(M) && rangebit4to16(Q)) {
-        A = initializeA(A, M)
-        display(MC, M, Q, A, Q_1, Q0, out_type)
-      }
-      else {
-        output_box.innerHTML = `
-          <div class="error">Input should be within 4 to 16 bits</div>
-        `
-      }
+      // if (rangebit4to16(M) && rangebit4to16(Q)) {
+      A = initializeA(A, M)
+      display(MC, M, Q, A, Q_1, Q0, out_type)
+      // }
+      // else {
+      //   output_box.innerHTML = `
+      //     <div class="error">Input should be within 4 to 16 bits</div>
+      //   `
+      // }
     }
     else {
       output_box.innerHTML = `

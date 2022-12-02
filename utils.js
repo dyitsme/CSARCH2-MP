@@ -1,6 +1,3 @@
-const binRadio = document.querySelector('#binary')
-
-
 export function is_digit(str) {
   let isDecimal = false;
   for (let i = 0; i < str.length; i++) {
@@ -54,7 +51,7 @@ export function is_bin(str) {
 //         valid = False
 //     return B, valid
 
-export function dec_to_bin(D, valid) {
+export function dec_to_bin(D) {
   let nB = '0'
   let B = ''
 
@@ -62,28 +59,16 @@ export function dec_to_bin(D, valid) {
     D = D.slice(1)
     nB = '1' 
   }
-  // if (isDigit(D)) {
-    D = parseInt(D)
-    B = ''
-    while (D != 0) {
-      B = (D % 2).toString() + B
-      D = D / 2
-      D = Math.floor(D)
-    }
-    if (nB == '1') {
-      B = complement(B)
-    }
-    B = nB + B
-  // }
-  // else {
-  //   alert('Is not digit')
-  //   B = 0
-  //   valid = false
-  // }
-  // return {
-  //   B: B,
-  //   valid: valid
-  // }
+  D = parseInt(D)
+  B = ''
+  while (D != 0) {
+    B = (D % 2).toString() + B
+    D = Math.floor(D / 2)
+  }
+  if (nB == '1') {
+    B = complement(B)
+  }
+  B = nB + B
   return B
 }
 
@@ -157,7 +142,6 @@ export function shift(A, Q, Q_1) {
 
 // checks if within 4 to 16 bits
 export function rangebit4to16(str) {
-  
   if (str.length >= 4 && str.length <= 16) {
     return true 
   }
