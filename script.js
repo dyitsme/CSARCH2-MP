@@ -34,15 +34,14 @@ function console_test(MC, M, Q, A, Q_1, Q0) {
   for (let i = 0; i < Q.length; i++) {
     console.log("------------------------------")
     if (Q.charAt(Q0) + Q_1 == "01") {
-      A = add(A, M)
-
       console.log(M + "\t\tA <- A+M")
       console.log(A + "\t\tCycle " + (i+1))
+      A = add(A, M)
     }
     else if  (Q.charAt(Q0) + Q_1 == "10") {
-      A = add(A, MC) // add is wrong
       console.log(MC + "\t\tA <- A-M")
       console.log(A + "\t\tCycle " + (i+1))
+      A = add(A, MC) // add is wrong
     }
     else {
       console.log("-COPY-\t\tCycle " + (i+1))
@@ -60,8 +59,11 @@ function console_test(MC, M, Q, A, Q_1, Q0) {
   console.log("\nFinal Answer: " + prod)
 }
 
-  
-function render_all(MC, M, Q, A, Q_1, Q0) {
+function wait(delay) {
+  return new Promise(resolve => setTimeout(resolve, delay));
+}
+
+async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
   let prod = ''
   
   const output_box = document.querySelector('.output-box')
@@ -77,6 +79,7 @@ function render_all(MC, M, Q, A, Q_1, Q0) {
       output_box.innerHTML += `
         <div>------------------------------</div>
       `
+      if (sbs) await wait(3000);
     if (Q.charAt(Q0) + Q_1 == "01") {
       output_box.innerHTML += `
         <div class="cycle">
@@ -84,6 +87,7 @@ function render_all(MC, M, Q, A, Q_1, Q0) {
           <div>${A} Cycle ${i+1}</div>
         </div>
       `
+      if (sbs) await wait(1000);
       A = add(A, M)
     }
     else if  (Q.charAt(Q0) + Q_1 == "10") {
@@ -93,17 +97,20 @@ function render_all(MC, M, Q, A, Q_1, Q0) {
           <div>${A} Cycle ${i+1}</div>
         </div>
       `
+      if (sbs) await wait(1000);
       A = add(A, MC) // add is wrong
     }
     else {
       output_box.innerHTML += `
         <div class="cycle">-COPY- Cycle ${i+1}</div>
       `
+      if (sbs) await wait(1000);
     }
     
     output_box.innerHTML += `
       <div>${A} ${Q} ${Q_1}</div>
     `
+    if (sbs) await wait(500);
     let obj = shift(A, Q, Q_1)
     A = obj.A
     Q = obj.Q
@@ -112,6 +119,7 @@ function render_all(MC, M, Q, A, Q_1, Q0) {
     output_box.innerHTML += `
       <div>${A} ${Q} ${Q_1}</div>
     `
+    if (sbs) await wait(1000);
   }
 
   prod = A + Q
@@ -171,11 +179,11 @@ function display(MC, M, Q, A, Q_1, Q0, out_type) {
   if (out_type == 'Step') {
     // change to step by step
     reset_html()
-    render_all(MC, M, Q, A, Q_1, Q0)
+    render_all(MC, M, Q, A, Q_1, Q0, true)
   }
   else if (out_type == 'All') {
     reset_html()
-    render_all(MC, M, Q, A, Q_1, Q0)
+    render_all(MC, M, Q, A, Q_1, Q0, false)
   }
   else {
     // display to text file
@@ -217,10 +225,21 @@ function main() {
         A = initializeA(A, M)
         display(MC, M, Q, A, Q_1, Q0, out_type)
       }
-      else {
+      else if (M.length > 16 || Q.length > 16) {
         output_box.innerHTML = `
           <div class="error">Input should be within 4 to 16 bits</div>
         `
+      }
+      else {
+        while(M.length < 4) {
+          M = M.charAt(0) + M
+        }
+        while(Q.length < 4) {
+          Q = Q.charAt(0) + Q
+        }
+        A = initializeA(A, M)
+        MC = complement(M)
+        display(MC, M, Q, A, Q_1, Q0, out_type)
       }
     }
     else {
@@ -236,15 +255,26 @@ function main() {
       MC = complement(M)
       Q0 = Q.length-1
 
-      // if (rangebit4to16(M) && rangebit4to16(Q)) {
-      A = initializeA(A, M)
-      display(MC, M, Q, A, Q_1, Q0, out_type)
-      // }
-      // else {
-      //   output_box.innerHTML = `
-      //     <div class="error">Input should be within 4 to 16 bits</div>
-      //   `
-      // }
+      if (rangebit4to16(M) && rangebit4to16(Q)) {
+        A = initializeA(A, M)
+        display(MC, M, Q, A, Q_1, Q0, out_type)
+      }
+      else if (M.length > 16 || Q.length > 16) {
+        output_box.innerHTML = `
+          <div class="error">Input should be within 4 to 16 bits</div>
+        `
+      }
+      else {
+        while(M.length < 4) {
+          M = M.charAt(0) + M
+        }
+        while(Q.length < 4) {
+          Q = Q.charAt(0) + Q
+        }
+        A = initializeA(A, M)
+        MC = complement(M)
+        display(MC, M, Q, A, Q_1, Q0, out_type)
+      }
     }
     else {
       output_box.innerHTML = `
