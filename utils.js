@@ -1,7 +1,9 @@
 export function is_digit(str) {
   let isDecimal = false;
   for (let i = 0; i < str.length; i++) {
-    if (str[i] == "0" || 
+    if (i == 0) {
+      if (str[i] == "-" ||
+        str[i] == "0" || 
         str[i] == "1" ||
         str[i] == "2" ||
         str[i] == "3" ||
@@ -11,9 +13,24 @@ export function is_digit(str) {
         str[i] == "7" ||
         str[i] == "8" ||
         str[i] == "9" ) {
-      isDecimal = true;
-    } else {
-      isDecimal = false;
+        isDecimal = true;
+      }
+    }
+    else {
+      if (str[i] == "0" || 
+          str[i] == "1" ||
+          str[i] == "2" ||
+          str[i] == "3" ||
+          str[i] == "4" ||
+          str[i] == "5" ||
+          str[i] == "6" ||
+          str[i] == "7" ||
+          str[i] == "8" ||
+          str[i] == "9" ) {
+        isDecimal = true;
+      } else {
+        isDecimal = false;
+      }
     }
   }
   return isDecimal;
