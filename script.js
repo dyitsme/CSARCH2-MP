@@ -1,4 +1,4 @@
-import { complement, add, shift, is_bin, is_digit, dec_to_bin, rangebit4to16 } from './utils.js'
+import { complement, add, shift, is_bin, is_digit, bin_to_dec, dec_to_bin, rangebit4to16 } from './utils.js'
 
 document.querySelector('#submit').addEventListener('click', main)
 const output_box = document.querySelector('.output-box')
@@ -41,7 +41,7 @@ function console_test(MC, M, Q, A, Q_1, Q0) {
     else if  (Q.charAt(Q0) + Q_1 == "10") {
       console.log(MC + "\t\tA <- A-M")
       console.log(A + "\t\tCycle " + (i+1))
-      A = add(A, MC) // add is wrong
+      A = add(A, MC) 
     }
     else {
       console.log("-COPY-\t\tCycle " + (i+1))
@@ -64,7 +64,8 @@ function wait(delay) {
 }
 
 async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
-  let prod = ''
+  let prodB = ''
+  let prodD = ''
   
   const output_box = document.querySelector('.output-box')
   output_box.innerHTML += `
@@ -77,7 +78,7 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
   `
   for (let i = 0; i < Q.length; i++) {
       output_box.innerHTML += `
-        <div>------------------------------</div>
+        <hr></hr>
       `
       if (sbs) await wait(3000);
     if (Q.charAt(Q0) + Q_1 == "01") {
@@ -123,8 +124,11 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
   }
 
   prod = A + Q
+  prodD = bin_to_dec(prodB)
   output_box.innerHTML += `
-    <div class="prod">Final Answer: ${prod}</div>
+    <hr></hr>
+    <div class="prod">Final Answer (Binary): ${prodB}</div>
+    <div class="prod">Final Answer (Decimal): ${prodD}</div>
   `
 }
 
