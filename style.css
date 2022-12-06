@@ -5,7 +5,9 @@
     --b: #d9a7a0;
     --c: #f2e0d5;
     --d: #a66f6f;
-    --e: #68a0a6;
+    --e: #745d4e;
+    --f: #f6f3f1;
+    
 
     --border-radius: 0.6rem;
     --card-border-radius: 1rem;
@@ -101,14 +103,15 @@ main .container .left .sidebar{
     width: 100%;
 }
 
-main .container .left .sidebar .main-title{
-    font-size: 1cm;
+main .container .left .sidebar h2{
+    font-size: 0.7cm;
     color: var(--c);
     align-self: center;
+    text-align: center;
     padding: 0 0 12px 0;
 }
 
-main .container .left .sidebar .type-title{
+main .container .left .sidebar h3{
     font-size: 0.65cm;
     color: var(--c);
 }
@@ -164,4 +167,28 @@ main .container .left .sidebar .outtype-box{
 .btn-primary{
     background: var(--a);
     color: var(--c);
+}
+
+/*===================== MAIN-LEFT =====================*/
+main .right h2{
+    color: var(--a);
+}
+
+main .right .output-box{
+    background: var(--d);
+    color: var(--c);
+    padding: 15px 15px 15px 15px;
+    border-radius: var(--border-radius);
+}
+
+main .right .cycle{
+    background: black;
+}
+
+main .right .hint{
+    color: var(--e);
+    background: var(--f);
+    padding: 0 15px 0 15px;
+    margin-top: 15px;
+    border-radius: var(--border-radius);
 }
