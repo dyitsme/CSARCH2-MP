@@ -11,31 +11,78 @@
 </head>
 
 <body>
-	<h1>Sequential Circuit Binary Multiplier</h1>
-	<h2>Input</h2>
-	<div class="input-box">
-		<label>M</label>
-		<input type="text" id="inputM">
-		<label>Q</label>
-		<input type="text" id="inputQ">
-	</div>
-	<div class="number-box">
-		<div>Number type</div>
-		<input type="radio" name="num_type" value="Binary" checked><label>Binary</label>
-		<input type="radio" name="num_type" value="Decimal"><label>Decimal</label>
-	</div>
-	<div class="outtype-box">
-		<div>Output type</div>
-		<input type="radio" name="out_type" value="Step" checked><label>Step-by-step</label>
-		<input type="radio" name="out_type" value="All"><label>All</label>
-		<input type="radio" name="out_type" value="File"><label>File</label>
-	</div>
-	<button id="submit">Enter</button>
+	<!------------------------ NAVBAR ------------------------>
+	<nav>
+		<div class="container">
+			<div class="logo"><img src="./lg.png"></div>
+			<h1 class="page-title">Sequential Circuit Binary Multiplier</h1>
+		</div>
+	</nav>
 
-	<h2>Output</h2>
-	<div class="output-box">
+	<!------------------------- MAIN ------------------------->
+	<main>
+		<div class="container">
+			<!---------------------- MAIN-LEFT ----------------------->
+			<div class="left">
+				<a class="sidebar">
+					<h2 class="main-title">Input</h2>
+	
+					<div class="input-box">
+						<div>
+							<label>M</label>
+							<input type="text" id="inputM" class="insert-box" placeholder="  Insert M">
+						</div>
+						
+						<div>
+							<label>Q</label>
+							<input type="text" id="inputQ" class="insert-box" placeholder="  Insert Q">
+						</div>
+					</div>
+				
+					<div class="number-box">
+						<div class="type-title">Number type</div>
+						<div>
+							<input type="radio" name="num_type" value="Binary" checked>
+							<label>Binary</label>
+						</div>
+						
+						<div>
+							<input type="radio" name="num_type" value="Decimal">
+							<label>Decimal</label>
+						</div>
+					</div>
+				
+					<div class="outtype-box">
+						<div class="type-title">Output type</div>
+						<div>
+							<input type="radio" name="out_type" value="Step" checked>
+							<label>Step-by-step</label>
+						</div>
+						
+						<div>
+							<input type="radio" name="out_type" value="All">
+							<label>All</label>
+						</div>
+						
+						<div>
+							<input type="radio" name="out_type" value="File">
+							<label>File</label>
+						</div>
+					</div>
+					
+					<div class="btn-pad">
+						<button class="btn btn-primary" id="submit">Enter</button>
+					</div>
+				</a>
+			</div>
 
-	</div>
+			<!---------------------- MAIN-RIGHT ---------------------->
+			<div class="right">
+				<h2>Output</h2>
+				<div class="output-box"></div>
+			</div>
+		</div>
+	</main>
 </body>
 
 </html>
