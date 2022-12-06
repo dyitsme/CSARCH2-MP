@@ -41,7 +41,7 @@ function console_test(MC, M, Q, A, Q_1, Q0) {
     else if  (Q.charAt(Q0) + Q_1 == "10") {
       console.log(MC + "\t\tA <- A-M")
       console.log(A + "\t\tCycle " + (i+1))
-      A = add(A, MC) 
+      A = add(A, MC) // add is wrong
     }
     else {
       console.log("-COPY-\t\tCycle " + (i+1))
@@ -74,50 +74,120 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
   inM.setAttribute("disabled", true);
   inQ.setAttribute("disabled", true);
   const output_box = document.querySelector('.output-box')
-  output_box.innerHTML += `
-    <div>
-      <div class="init">Initialization</div>
-      <div>-M = ${MC}</div>
-      <div>M = ${M}</div>
-      <div>A = ${A} Q = ${Q} Q-1 = ${Q_1}</div>
-    </div>
-  `
+  if (sbs) {
+    output_box.innerHTML += `
+      <div>
+        <div class="init">Initialization</div>
+        <div>-M = ${MC}</div>
+        <div>M = ${M}</div>
+        <div>A = ${A} Q = ${Q} Q-1 = ${Q_1}</div>
+        </br>
+        <div class="hint">- Complement M so we can use that for subtraction later.</div>
+        <div class="hint">- Set A to 0 with the number of 0's being equal to the number of bits in M.</div>
+        <div class="hint">- Set Q-1 to 0 and keep track of the last bit of Q.</div>
+      </div>
+      </br>
+    `
+    await wait(1000);
+  }
+  else {
+    output_box.innerHTML += `
+      <div>
+        <div class="init">Initialization</div>
+        <div>-M = ${MC}</div>
+        <div>M = ${M}</div>
+        <div>A = ${A} Q = ${Q} Q-1 = ${Q_1}</div>
+      </div>
+    `
+  }
   for (let i = 0; i < Q.length; i++) {
       output_box.innerHTML += `
         <hr></hr>
       `
-      if (sbs) await wait(3000);
+      if (sbs) await wait(4000);
     if (Q.charAt(Q0) + Q_1 == "01") {
-      output_box.innerHTML += `
-        <div class="cycle">
-          <div>${M} A <- A+M</div>
-          <div>${A} Cycle ${i+1}</div>
-        </div>
-      `
-      if (sbs) await wait(1000);
+      if (sbs) {
+        output_box.innerHTML += `
+          <div>Cycle ${i+1}</div>
+          <div class="hint">- Check the values of Q's least significant bit and Q-1.</div>
+          <div class="hint">- Q0  = 0</div>
+          <div class="hint">- Q-1 = 1</div>
+          <div class="hint">- Therefore: A <- A + M</div>
+          </br>
+          <div class="cycle">
+            <div>${M}</div>
+            <div>${A}</div>
+          </div>
+          </br>
+        `
+        await wait(3000);
+      } else {
+        output_box.innerHTML += `
+          <div class="cycle">
+            <div>${M} A <- A+M</div>
+            <div>${A} Cycle ${i+1}</div>
+          </div>
+        `
+      }
       A = add(A, M)
     }
     else if  (Q.charAt(Q0) + Q_1 == "10") {
-      output_box.innerHTML += `
+      if (sbs) {
+        output_box.innerHTML += `
+        <div>Cycle ${i+1}</div>
+        <div class="hint">- Check the values of Q's least significant bit and Q-1.</div>
+        <div class="hint">- Q0  = 1</div>
+        <div class="hint">- Q-1 = 0</div>
+        <div class="hint">- Therefore: A <- A - M</div>
+        <div class="hint">- Since we complemented M earlier, we can just add that to A,</div>
+        </br>
         <div class="cycle">
-          <div>${MC} A <- A-M</div>
-          <div>${A} Cycle ${i+1}</div>
+          <div>${MC}</div>
+          <div>${A}</div>
         </div>
+        </br>
       `
-      if (sbs) await wait(1000);
-      A = add(A, MC) // add is wrong
+        await wait(4000);
+      } else {
+        output_box.innerHTML += `
+          <div class="cycle">
+            <div>${MC} A <- A-M</div>
+            <div>${A} Cycle ${i+1}</div>
+          </div>
+        `
+      }
+      A = add(A, MC) 
     }
     else {
-      output_box.innerHTML += `
-        <div class="cycle">-COPY- Cycle ${i+1}</div>
-      `
-      if (sbs) await wait(1000);
+      if (sbs) {
+        output_box.innerHTML += `
+          <div>Cycle ${i+1}</div>
+          <div class="hint">- Check the values of Q's least significant bit and Q-1.</div>
+          <div class="hint">- Q0  = Q-1</div>
+          <div class="hint">- Therefore: Just COPY the current values.</div>
+          </br>
+        `
+        await wait(4000);
+      } else {
+        output_box.innerHTML += `
+          <div class="cycle">-COPY- Cycle ${i+1}</div>
+        `
+      }
     }
     
-    output_box.innerHTML += `
-      <div>${A} ${Q} ${Q_1}</div>
-    `
-    if (sbs) await wait(500);
+    if (sbs) {
+      output_box.innerHTML += `
+        <div>${A} ${Q} ${Q_1}</div>
+        </br>
+        <div class="hint">- Shift to the right and take note of the sign bit.</div>
+        </br>
+      `
+      await wait(2000);
+    } else {
+      output_box.innerHTML += `
+        <div>${A} ${Q} ${Q_1}</div>
+      `
+    }
     let obj = shift(A, Q, Q_1)
     A = obj.A
     Q = obj.Q
@@ -126,13 +196,21 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
     output_box.innerHTML += `
       <div>${A} ${Q} ${Q_1}</div>
     `
-    if (sbs) await wait(1000);
+    if (sbs) await wait(3000);
   }
 
   prodB = A + Q
   prodD = bin_to_dec(prodB)
+  if (sbs) {
+    output_box.innerHTML += `
+    </br></br>
+    <div class="hint">- To get the final answer, combine A and Q.</div>
+    </br>
+  `
+  }
   output_box.innerHTML += `
     <hr></hr>
+    </br>
     <div class="prod">Final Answer (Binary): ${prodB}</div>
     <div class="prod">Final Answer (Decimal): ${prodD}</div>
   `
@@ -154,14 +232,14 @@ function render_file(MC, M, Q, A, Q_1, Q0) {
     output_file.push(`------------------------------\n`)
 
     if (Q.charAt(Q0) + Q_1 == "01") {
-      A = add(A, M)
       output_file.push(`${M} A <- A+M\n`)
       output_file.push(`${A} Cycle ${i+1}\n`)
+      A = add(A, M)
     }
     else if  (Q.charAt(Q0) + Q_1 == "10") {
-      A = add(A, MC) // add is wrong
       output_file.push(`${M} A <- A+M\n`)
       output_file.push(`${A} Cycle ${i+1}\n`)
+      A = add(A, MC) // add is wrong
     }
     else {
       output_file.push(`-COPY- Cycle ${i+1}\n`)
@@ -192,7 +270,7 @@ function display(MC, M, Q, A, Q_1, Q0, out_type) {
   if (out_type == 'Step') {
     // change to step by step
     reset_html()
-    render_all(MC, M, Q, A, Q_1, Q0, true)
+    render_all(MC, M, Q, A, Q_1, Q0, true);
   }
   else if (out_type == 'All') {
     reset_html()
@@ -286,6 +364,7 @@ function main() {
         }
         A = initializeA(A, M)
         MC = complement(M)
+        Q0 = Q.length-1
         display(MC, M, Q, A, Q_1, Q0, out_type)
       }
     }
