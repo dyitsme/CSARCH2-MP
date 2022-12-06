@@ -42,31 +42,31 @@ export function is_bin(str) {
     if (str[i] == "0" || str[i] == "1") {
       isBinary = true;
     } else {
-      isBinary = false;
+      return false;
     }
   }
   return isBinary;
 }
 
-// does not work yet
-// def dec_to_bin(D, valid):
-//     nB = "0"
-//     if D[0] == "-":
-//         D = D[1:]
-//         nB = "1"
-//     if D.isdigit():
-//         D = int(D)
-//         B = ""
-//         while D != 0:
-//             B = str(D % 2) + B
-//             D //= 2
-//         if nB == "1":
-//             B = complement(B)
-//         B = nB + B
-//     else:
-//         B = 0
-//         valid = False
-//     return B, valid
+export function bin_to_dec(B) {
+  let D = 0;
+  let multiplier = 1;
+  let negative = false;
+
+  if (B.charAt(0) == "1") {
+      B = complement(B);
+      B = B.slice(1);
+      negative = true;
+  }
+  for (let i = B.length-1; i > -1 ; i--) {
+      D += parseInt(B[i]) * multiplier;
+      multiplier *= 2;
+  }
+  if (negative) {
+      D *= -1;
+  }
+  return D;
+}
 
 export function dec_to_bin(D) {
   let nB = '0'
