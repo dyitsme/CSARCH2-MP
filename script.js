@@ -98,13 +98,14 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
         <div>M = ${M}</div>
         <div>A = ${A} Q = ${Q} Q-1 = ${Q_1}</div>
       </div>
+      </br>
     `
   }
   for (let i = 0; i < Q.length; i++) {
       output_box.innerHTML += `
         <hr></hr>
       `
-      if (sbs) await wait(4000);
+      if (sbs) await wait(2000);
     if (Q.charAt(Q0) + Q_1 == "01") {
       if (sbs) {
         output_box.innerHTML += `
@@ -124,8 +125,8 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
       } else {
         output_box.innerHTML += `
           <div class="cycle">
-            <div>${M} A <- A+M</div>
-            <div>${A} Cycle ${i+1}</div>
+            <div>${M} Cycle ${i+1}</div>
+            <div>${A} A <- A+M</div>
           </div>
         `
       }
@@ -151,8 +152,8 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
       } else {
         output_box.innerHTML += `
           <div class="cycle">
-            <div>${MC} A <- A-M</div>
-            <div>${A} Cycle ${i+1}</div>
+            <div>${MC} Cycle ${i+1}</div>
+            <div>${A} A <- A-M</div>
           </div>
         `
       }
@@ -178,9 +179,7 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
     if (sbs) {
       output_box.innerHTML += `
         <div>${A} ${Q} ${Q_1}</div>
-        </br>
         <div class="hint">- Shift to the right and take note of the sign bit.</div>
-        </br>
       `
       await wait(2000);
     } else {
@@ -195,8 +194,9 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
 
     output_box.innerHTML += `
       <div>${A} ${Q} ${Q_1}</div>
+      </br>
     `
-    if (sbs) await wait(3000);
+    if (sbs) await wait(2000);
   }
 
   prodB = A + Q
@@ -220,7 +220,8 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
 }
 
 function render_file(MC, M, Q, A, Q_1, Q0) {
-  let prod = ''
+  let prodB = ''
+  let prodD = ''
   
   const output_file = []
 
@@ -232,13 +233,13 @@ function render_file(MC, M, Q, A, Q_1, Q0) {
     output_file.push(`------------------------------\n`)
 
     if (Q.charAt(Q0) + Q_1 == "01") {
-      output_file.push(`${M} A <- A+M\n`)
-      output_file.push(`${A} Cycle ${i+1}\n`)
+      output_file.push(`${M} Cycle ${i+1}\n`)
+      output_file.push(`${A} A <- A+M\n`)
       A = add(A, M)
     }
     else if  (Q.charAt(Q0) + Q_1 == "10") {
-      output_file.push(`${M} A <- A+M\n`)
-      output_file.push(`${A} Cycle ${i+1}\n`)
+      output_file.push(`${M} Cycle ${i+1}\n`)
+      output_file.push(`${A} A <- A+M\n`)
       A = add(A, MC) // add is wrong
     }
     else {
@@ -254,8 +255,10 @@ function render_file(MC, M, Q, A, Q_1, Q0) {
     output_file.push(`${A} ${Q} ${Q_1}\n`)
   }
 
-  prod = A + Q
-  output_file.push(`Final Answer: ${prod}\n`)
+  prodB = A + Q
+  prodD = bin_to_dec(prodB)
+  output_file.push(`Final Answer: ${prodB}\n`)
+  output_file.push(`Final Answer: ${prodD}\n`)
   
   return output_file
 }
