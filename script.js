@@ -66,7 +66,13 @@ function wait(delay) {
 async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
   let prodB = ''
   let prodD = ''
-  
+  let btn = document.getElementById('submit');
+  let inM = document.getElementById('inputM');
+  let inQ = document.getElementById('inputQ');
+
+  btn.setAttribute("disabled", true);
+  inM.setAttribute("disabled", true);
+  inQ.setAttribute("disabled", true);
   const output_box = document.querySelector('.output-box')
   output_box.innerHTML += `
     <div>
@@ -130,6 +136,9 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
     <div class="prod">Final Answer (Binary): ${prodB}</div>
     <div class="prod">Final Answer (Decimal): ${prodD}</div>
   `
+  btn.removeAttribute("disabled");
+  inM.removeAttribute("disabled");
+  inQ.removeAttribute("disabled");
 }
 
 function render_file(MC, M, Q, A, Q_1, Q0) {
