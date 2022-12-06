@@ -11,7 +11,7 @@
 
     --border-radius: 0.6rem;
     --card-border-radius: 1rem;
-    --btn-padding: 0.6rem 5rem;
+    --btn-padding: 0.8rem 5.2rem;
     --search-padding: 0.6rem 1rem;
     --card-padding: 1rem;
     --sticky-top-left: 5.4rem;
@@ -80,7 +80,7 @@ main{
 
 main .container{
     display: grid;
-    grid-template-columns: 31vh auto;
+    grid-template-columns: 33vh auto;
     column-gap: 2rem;
     position: relative;
 }
@@ -104,7 +104,7 @@ main .container .left .sidebar{
 }
 
 main .container .left .sidebar h2{
-    font-size: 0.7cm;
+    font-size: 0.75cm;
     color: var(--c);
     align-self: center;
     text-align: center;
@@ -112,7 +112,7 @@ main .container .left .sidebar h2{
 }
 
 main .container .left .sidebar h3{
-    font-size: 0.65cm;
+    font-size: 0.65;
     color: var(--c);
 }
 
@@ -143,7 +143,7 @@ main .container .left .sidebar .outtype-box{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0 0 12px 0;
+    padding: 0 0 15px 0;
 }
 
 /*===================== ENTER BUTTON =====================*/
@@ -171,6 +171,7 @@ main .container .left .sidebar .outtype-box{
 
 /*===================== MAIN-LEFT =====================*/
 main .right h2{
+    font-size: 1cm;
     color: var(--a);
 }
 
@@ -182,13 +183,15 @@ main .right .output-box{
 }
 
 main .right .cycle{
-    background: black;
+    padding: 15px 15px 0 15px;
+    background: var(--b);
+    color: var(--a);
 }
 
 main .right .hint{
     color: var(--e);
     background: var(--f);
-    padding: 0 15px 0 15px;
+    padding: 15px 15px 15px 15px;
     margin-top: 15px;
     border-radius: var(--border-radius);
 }
