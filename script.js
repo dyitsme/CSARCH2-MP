@@ -203,7 +203,6 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
   prodD = bin_to_dec(prodB)
   if (sbs) {
     output_box.innerHTML += `
-    </br></br>
     <div class="hint">- To get the final answer, combine A and Q.</div>
     </br>
   `
@@ -333,6 +332,7 @@ function main() {
         }
         A = initializeA(A, M)
         MC = complement(M)
+        Q0 = Q.length-1
         display(MC, M, Q, A, Q_1, Q0, out_type)
       }
     }
