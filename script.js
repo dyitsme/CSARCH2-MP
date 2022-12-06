@@ -129,7 +129,7 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
     if (sbs) await wait(1000);
   }
 
-  prod = A + Q
+  prodB = A + Q
   prodD = bin_to_dec(prodB)
   output_box.innerHTML += `
     <hr></hr>
