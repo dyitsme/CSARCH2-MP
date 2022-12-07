@@ -76,7 +76,7 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
   const output_box = document.querySelector('.output-box')
   if (sbs) {
     output_box.innerHTML += `
-      <div>
+      <div class="cycle">
         <div class="init">Initialization</div>
         <div>-M = ${MC}</div>
         <div>M = ${M}</div>
@@ -86,7 +86,6 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
         <div class="hint">- Set A to 0 with the number of 0's being equal to the number of bits in M.</div>
         <div class="hint">- Set Q-1 to 0 and keep track of the last bit of Q.</div>
       </div>
-      </br>
     `
     await wait(1000);
   }
@@ -98,14 +97,10 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
         <div>M = ${M}</div>
         <div>A = ${A} Q = ${Q} Q-1 = ${Q_1}</div>
       </div>
-      </br>
     `
   }
   for (let i = 0; i < Q.length; i++) {
-      output_box.innerHTML += `
-        <hr></hr>
-      `
-      if (sbs) await wait(2000);
+    if (sbs) await wait(2000);
     if (Q.charAt(Q0) + Q_1 == "01") {
       if (sbs) {
         output_box.innerHTML += `
@@ -115,10 +110,8 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
             <div class="hint">- Q0  = 0</div>
             <div class="hint">- Q-1 = 1</div>
             <div class="hint">- Therefore: A <- A + M</div>
-            </br>
             <div>${M}  <- M</div>
             <div>${A}  <- A</div>
-            </br>
         `
         await wait(3000);
       } else {
@@ -140,10 +133,8 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
           <div class="hint">- Q-1 = 0</div>
           <div class="hint">- Therefore: A <- A - M</div>
           <div class="hint">- Since we complemented M earlier, we can just add that to A,</div>
-          </br>
           <div>${MC}  <- M complement</div>
           <div>${A}  <- A</div>
-          </br>
       `
         await wait(4000);
       } else {
@@ -163,7 +154,6 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
             <div class="hint">- Check the values of Q's least significant bit and Q-1.</div>
             <div class="hint">- Q0  = Q-1</div>
             <div class="hint">- Therefore: Just COPY the current values.</div>
-            </br>
         `
         await wait(4000);
       } else {
@@ -175,13 +165,16 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
     
     if (sbs) {
       output_box.innerHTML += `
-        <div>(A)${A} (Q)${Q} ${Q_1}(Q[-1])</div>
-        <div class="hint">- Shift to the right and take note of the sign bit.</div>
+        <div class="cycle">
+          A = ${A} , Q = ${Q} , Q[-1] = ${Q_1}
+          <div class="hint">- Shift to the right and take note of the sign bit.</div>
+        </div>
+        
       `
       await wait(2000);
     } else {
       output_box.innerHTML += `
-        <div>(A)${A} (Q)${Q} ${Q_1}(Q[-1])</div>
+        <div class="cycle">A = ${A} , Q = ${Q} , Q[-1] = ${Q_1}</div>
       `
     }
     let obj = shift(A, Q, Q_1)
@@ -190,9 +183,8 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
     Q_1 = obj.Q_1
 
     output_box.innerHTML += `
-        <div>(A)${A} (Q)${Q} ${Q_1}(Q[-1])</div>
+        <div class="cycle-ans">A = ${A} , Q = ${Q} , Q[-1] = ${Q_1}</div>
       </div>
-      </br>
     `
     if (sbs) await wait(2000);
   }
@@ -202,14 +194,13 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
   if (sbs) {
     output_box.innerHTML += `
     <div class="hint">- To get the final answer, combine A and Q.</div>
-    </br>
   `
   }
   output_box.innerHTML += `
-    <hr></hr>
-    </br>
-    <div class="prod">Final Answer (Binary): ${prodB}</div>
-    <div class="prod">Final Answer (Decimal): ${prodD}</div>
+    <div class="prod">
+      Final Answer (Binary): ${prodB} <br>
+      Final Answer (Decimal): ${prodD}
+    </div>
   `
   btn.removeAttribute("disabled");
   inM.removeAttribute("disabled");
