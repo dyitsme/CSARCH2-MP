@@ -81,10 +81,10 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
         <div>-M = ${MC}</div>
         <div>M = ${M}</div>
         <div>A = ${A} Q = ${Q} Q-1 = ${Q_1}</div>
-        </br>
-        <div class="hint">- Complement M so we can use that for subtraction later.</div>
-        <div class="hint">- Set A to 0 with the number of 0's being equal to the number of bits in M.</div>
-        <div class="hint">- Set Q-1 to 0 and keep track of the last bit of Q.</div>
+        <div class="line"></div>
+        <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Complement M so we can use that for subtraction later.</div></div>
+        <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Set A to 0 with the number of 0's being equal to the number of bits in M.</div></div>
+        <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Set Q-1 to 0 and keep track of the last bit of Q.</div></div>
       </div>
     `
     await wait(1000);
@@ -96,6 +96,7 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
         <div>-M = ${MC}</div>
         <div>M = ${M}</div>
         <div>A = ${A} Q = ${Q} Q-1 = ${Q_1}</div>
+        <div class="line-1"></div>
       </div>
     `
   }
@@ -106,10 +107,10 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
         output_box.innerHTML += `
           <div class="cycle">
             <div>Cycle ${i+1}</div>
-            <div class="hint">- Check the values of Q's least significant bit and Q-1.</div>
-            <div class="hint">- Q0  = 0</div>
-            <div class="hint">- Q-1 = 1</div>
-            <div class="hint">- Therefore: A <- A + M</div>
+            <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Check the values of Q's least significant bit and Q-1.</div></div>
+            <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Q0  = 0</div></div>
+            <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Q-1 = 1</div></div>
+            <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Therefore: A <- A + M</div></div>
             <div>${M}  <- M</div>
             <div>${A}  <- A</div>
         `
@@ -128,11 +129,11 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
         output_box.innerHTML += `
         <div class="cycle">
           <div>Cycle ${i+1}</div>
-          <div class="hint">- Check the values of Q's least significant bit and Q-1.</div>
-          <div class="hint">- Q0  = 1</div>
-          <div class="hint">- Q-1 = 0</div>
-          <div class="hint">- Therefore: A <- A - M</div>
-          <div class="hint">- Since we complemented M earlier, we can just add that to A,</div>
+          <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Check the values of Q's least significant bit and Q-1.</div></div>
+          <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Q0  = 1</div></div>
+          <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Q-1 = 0</div></div>
+          <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Therefore: A <- A - M</div></div>
+          <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Since we complemented M earlier, we can just add that to A,</div></div>
           <div>${MC}  <- M complement</div>
           <div>${A}  <- A</div>
       `
@@ -151,9 +152,9 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
         output_box.innerHTML += `
           <div class="cycle">
             <div>Cycle ${i+1}</div>
-            <div class="hint">- Check the values of Q's least significant bit and Q-1.</div>
-            <div class="hint">- Q0  = Q-1</div>
-            <div class="hint">- Therefore: Just COPY the current values.</div>
+            <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Check the values of Q's least significant bit and Q-1.</div></div>
+            <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Q0  = Q-1</div></div>
+            <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Therefore: Just COPY the current values.</div></div>
         `
         await wait(4000);
       } else {
@@ -167,7 +168,7 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
       output_box.innerHTML += `
         <div class="cycle">
           A = ${A} , Q = ${Q} , Q[-1] = ${Q_1}
-          <div class="hint">- Shift to the right and take note of the sign bit.</div>
+          <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>Shift to the right and take note of the sign bit.</div></div>
         </div>
         
       `
@@ -193,7 +194,7 @@ async function render_all(MC, M, Q, A, Q_1, Q0, sbs) {
   prodD = bin_to_dec(prodB)
   if (sbs) {
     output_box.innerHTML += `
-    <div class="hint">- To get the final answer, combine A and Q.</div>
+    <div class="hint"><span class="icon"><iconify-icon icon="mdi:lightbulb-on" width="28" height="28"></iconify-icon></span><div>To get the final answer, combine A and Q.</div></div>
   `
   }
   output_box.innerHTML += `
@@ -270,7 +271,7 @@ function display(MC, M, Q, A, Q_1, Q0, out_type) {
   else {
     // display to text file
     output_box.innerHTML = `
-      <a id="a1" download="output.txt">Download text file</a>
+      <div class="ct"><span class="dl-icon"><iconify-icon icon="material-symbols:sim-card-download-rounded" width="35" height="35"></iconify-icon></span><a id="a1" download="output.txt" class="dl">Download text file</a></div>
     `
     const file = render_file(MC, M, Q, A, Q_1, Q0)
     const blob1 = new Blob(file, { type: 'text/plain'})
