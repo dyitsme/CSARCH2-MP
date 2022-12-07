@@ -3,6 +3,9 @@ README!
 
 Welcome to the DEMADALE Sequential Circuit Binary Multiplication web tool!
 This website is used to perform binary multiplication on binary and decimal inputs with the use of the sequential circuit.
+
+https://binarymultiplier.netlify.app/
+
 Follow the steps accordingly if you wish to be guided:
 
 
