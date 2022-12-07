@@ -1,8 +1,10 @@
 README!
 
+
 Welcome to the DEMADALE Sequential Circuit Binary Multiplication web tool!
 This website is used to perform binary multiplication on binary and decimal inputs with the use of the sequential circuit.
 Follow the steps accordingly if you wish to be guided:
+
 
 Perform 1, 2, and 3 in any order
 1.) Select your input type using the radio buttons under "Number Type"
@@ -17,6 +19,7 @@ Perform 1, 2, and 3 in any order
   "All" prints the complete solution immediately with minimal explanation.
   "File" prints all of the output text to a file which can be downloaded.
 4.) Press "Enter" and check the results.
+
 
 Here are some sample test cases:
 
