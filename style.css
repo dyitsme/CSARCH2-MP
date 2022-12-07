@@ -7,6 +7,8 @@
     --d: #a66f6f;
     --e: #745d4e;
     --f: #f6f3f1;
+    --g: #322821;
+    --h: #e4c1bd;
     
 
     --border-radius: 0.6rem;
@@ -116,12 +118,17 @@ main .container .left .sidebar h3{
     color: var(--c);
 }
 
+main .container .left .sidebar .type-style{
+    color: var(--h);
+}
+
 main .container .left .sidebar .input-box{
     color: var(--c);
 }
 
 .insert-box{
     background: var(--c);
+    border-radius: 0.2rem;
 }
 
 .insert-box:hover{
@@ -158,6 +165,8 @@ main .container .left .sidebar .outtype-box{
     cursor: pointer;
     transition: all 300ms ease;
     font-size: 1rem;
+    font-weight: 700;
+
 }
 
 .btn:hover{
@@ -180,16 +189,19 @@ main .right .output-box{
     color: var(--c);
     padding: 15px 15px 15px 15px;
     border-radius: var(--border-radius);
+    font-weight: 500;
+
 }
 
 main .right .cycle{
     padding: 15px 15px 0 15px;
     background: var(--b);
-    color: var(--a);
+    color: var(--g);
+    border-radius: var(--border-radius);
 }
 
 main .right .hint{
-    color: var(--e);
+    color: var(--g);
     background: var(--f);
     padding: 15px 15px 15px 15px;
     margin-top: 15px;
