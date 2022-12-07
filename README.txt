@@ -19,6 +19,7 @@ Perform 1, 2, and 3 in any order
   "All" prints the complete solution immediately with minimal explanation.
   "File" prints all of the output text to a file which can be downloaded.
 4.) Press "Enter" and check the results.
+5.) You may repeat with a new input or use the same input for a different output type.
 
 
 Here are some sample test cases:
